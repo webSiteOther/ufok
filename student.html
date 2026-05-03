@@ -197,7 +197,7 @@
     </button>
   </div>
 
-  <!-- قسم الدراسة والتعلم (القديم كما هو) -->
+  <!-- قسم الدراسة والتعلم -->
   <div id="studySection" class="content-section active">
     <div class="user-card" id="userCard">
       <div class="user-info">
@@ -242,7 +242,7 @@
     </div>
   </div>
 
-  <!-- قسم الاختبارات (الجديد) -->
+  <!-- قسم الاختبارات -->
   <div id="testsSection" class="content-section">
     <div id="testsGrid" class="subjects-grid"></div>
 
@@ -448,7 +448,7 @@ function switchSection(section) {
   }
 }
 
-// رسم مواد التعلم (كما كانت)
+// رسم مواد التعلم (مع تحديث الروابط)
 function renderStudySubjects() {
   const grid = document.getElementById('subjectsGrid');
   grid.innerHTML = '';
@@ -478,7 +478,7 @@ function renderStudySubjects() {
         </div>
         <div class="subject-actions">
           <button class="btn-info" onclick="showInfo('${sub.key}')">ⓘ معلومات</button>
-          <a href="#" class="btn-start">▶ ابدأ المذاكرة</a>
+          <a href="${sub.key}.html" class="btn-start">▶ ابدأ المذاكرة</a>
         </div>
       </div>
     `;
@@ -490,7 +490,6 @@ function renderTestsSubjects() {
   const grid = document.getElementById('testsGrid');
   grid.innerHTML = '';
   SUBJECTS.forEach(sub => {
-    // لكل مادة نعرض كارت وبداخله الامتحانات
     let examsHTML = '';
     QUIZ_DATA[sub.key].forEach((exam, index) => {
       examsHTML += `
@@ -564,7 +563,7 @@ function showQuestion() {
 
 function selectOption(optIndex) {
   userAnswers[currentQIndex] = optIndex;
-  showQuestion(); // re-render to show selection
+  showQuestion(); 
 }
 
 function prevQuestion() { if(currentQIndex > 0) { currentQIndex--; showQuestion(); } }
@@ -600,7 +599,7 @@ function closeQuiz() {
   document.getElementById('testsGrid').style.display = 'grid';
 }
 
-// وظائف مساعدة للـ UI (تحديث الواجهة والتلميحات)
+// وظائف مساعدة للـ UI
 function renderUI() {
   const total = getTotal(state);
   const lvl = getLevel(total);
