@@ -35,7 +35,7 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     border: 1px solid var(--border);
   }
-  .hero-image { width: 100%; display: block; height: auto; }
+  .hero-image { width: 100%; display: block; height: auto; transition: opacity 0.3s; }
   .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); }
   .grid-box { background-color: var(--bg); animation: revealBox 1s forwards ease-out; }
   @keyframes revealBox { 0% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0; transform: scale(0.5); } }
@@ -183,7 +183,7 @@
   </div>
 
   <div class="hero-image-container">
-    <img src="img5.jpeg" alt="صورة توضيحية" class="hero-image" onerror="this.src='https://via.placeholder.com/800x400/16132E/6C3FE8?text=أفق+التعليمية'">
+    <img id="mainImage" src="img5.jpeg" alt="صورة توضيحية" class="hero-image" onerror="this.src='https://via.placeholder.com/800x400/16132E/6C3FE8?text=أفق+التعليمية'">
     <div class="grid-overlay" id="gridOverlay"></div>
   </div>
 
@@ -287,17 +287,24 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// تأثير المربعات
-const gridOverlay = document.getElementById('gridOverlay');
-if(gridOverlay) {
-  for(let i=0; i<60; i++) {
-    let box = document.createElement('div');
-    box.className = 'grid-box';
-    box.style.animationDelay = (Math.random() * 1.5) + 's';
-    gridOverlay.appendChild(box);
+// دالة تشغيل تأثير المربعات
+function playImageAnimation() {
+  const gridOverlay = document.getElementById('gridOverlay');
+  if(gridOverlay) {
+    gridOverlay.style.display = 'grid';
+    gridOverlay.innerHTML = '';
+    for(let i=0; i<60; i++) {
+      let box = document.createElement('div');
+      box.className = 'grid-box';
+      box.style.animationDelay = (Math.random() * 1.5) + 's';
+      gridOverlay.appendChild(box);
+    }
+    setTimeout(() => gridOverlay.style.display = 'none', 2500);
   }
-  setTimeout(() => gridOverlay.style.display = 'none', 2500);
 }
+
+// تشغيل التأثير عند تحميل الصفحة لأول مرة
+playImageAnimation();
 
 // بيانات المواد
 const SUBJECTS = [
@@ -411,6 +418,8 @@ const QUIZ_DATA = {
 
 // حالة التطبيق والمستخدم
 let state = {};
+let currentSection = 'study'; // تتبع القسم الحالي لتفادي تكرار الأنيميشن عند الضغط على نفس الزر
+
 function getState() { try { return JSON.parse(localStorage.getItem('ufuq_data') || '{}'); } catch(e) { return {}; } }
 function saveState(s) { localStorage.setItem('ufuq_data', JSON.stringify(s)); }
 function getTotal(s) { return Object.values(s.points || {}).reduce((a,b)=>a+b,0); }
@@ -430,25 +439,35 @@ function init() {
   renderTestsSubjects();
 }
 
-// التبديل بين قسم الدراسة وقسم الاختبارات
+// التبديل بين قسم الدراسة وقسم الاختبارات مع تغيير الصورة والأنيميشن
 function switchSection(section) {
+  if (currentSection === section) return; // منع التكرار لو تم الضغط على نفس الزر
+  currentSection = section;
+
   document.getElementById('btnStudy').classList.remove('active');
   document.getElementById('btnTests').classList.remove('active');
   document.getElementById('studySection').classList.remove('active');
   document.getElementById('testsSection').classList.remove('active');
 
+  const mainImg = document.getElementById('mainImage');
+
   if(section === 'study') {
     document.getElementById('btnStudy').classList.add('active');
     document.getElementById('studySection').classList.add('active');
+    mainImg.src = 'img5.jpeg'; // استعادة الصورة الأساسية
   } else {
     document.getElementById('btnTests').classList.add('active');
     document.getElementById('testsSection').classList.add('active');
     document.getElementById('testsGrid').style.display = 'grid';
     document.getElementById('quizInterface').style.display = 'none';
+    mainImg.src = 'img6.jpeg'; // عرض الصورة الجديدة للاختبارات
   }
+  
+  // إعادة تشغيل التأثير البصري
+  playImageAnimation();
 }
 
-// رسم مواد التعلم (مع تحديث الروابط)
+// رسم مواد التعلم
 function renderStudySubjects() {
   const grid = document.getElementById('subjectsGrid');
   grid.innerHTML = '';
@@ -582,7 +601,6 @@ function submitQuiz() {
   document.getElementById('quizResult').style.display = 'block';
   document.getElementById('resultScore').textContent = `${score} / 10`;
   
-  // مكافأة النقاط (كل إجابة صحيحة = 2 نقطة)
   const pointsEarned = score * 2;
   state.points[currentQuizKey] += pointsEarned;
   state.activities[currentQuizKey] += 1;
