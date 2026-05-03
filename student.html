@@ -3,10 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>أُفُق | المواد والاختبارات</title>
+<title>أُفُق | المواد الدراسية والاختبارات</title>
 <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 <style>
-  /* المتغيرات الأساسية كما هي */
   :root {
     --primary:#6C3FE8;--secondary:#F7B731;--accent:#FF6B6B;
     --green:#26de81;--cyan:#00D2D3;
@@ -15,21 +14,17 @@
   }
   *{margin:0;padding:0;box-sizing:border-box;}
   body{font-family:'Tajawal',sans-serif;background:var(--bg);color:var(--text);}
-  
-  /* القائمة العلوية */
   nav{position:fixed;top:0;width:100%;z-index:100;background:rgba(13,11,30,0.95);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);padding:14px 24px;display:flex;align-items:center;justify-content:space-between;}
   .logo{font-size:1.6rem;font-weight:900;color:var(--primary);text-decoration:none;}
   .nav-links{display:flex;gap:6px;flex-wrap:wrap;}
   .nav-links a{color:var(--muted);text-decoration:none;font-size:0.85rem;padding:7px 12px;border-radius:20px;transition:all 0.2s;}
   .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
-  
-  /* الحاوية الرئيسية */
-  .main{padding:90px 24px 60px;max-width:1400px;margin:0 auto;}
+  .main{padding:90px 24px 60px;max-width:1100px;margin:0 auto;}
   .page-header{text-align:center;margin-bottom:24px;}
   .page-header h1{font-size:2.4rem;font-weight:900;margin-bottom:8px;}
   .page-header p{color:var(--muted);font-size:0.95rem;}
 
-  /* تنسيق الصورة وتأثير المربعات */
+  /* Image */
   .hero-image-container {
     position: relative;
     width: 90%;
@@ -40,65 +35,52 @@
     box-shadow: 0 8px 25px rgba(0,0,0,0.3);
     border: 1px solid var(--border);
   }
-  .hero-image {
-    width: 100%;
-    display: block;
-    height: auto;
-  }
-  .grid-overlay {
-    position: absolute;
-    top: 0; left: 0; width: 100%; height: 100%;
-    display: grid;
-    grid-template-columns: repeat(10, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-  }
-  .grid-box {
-    background-color: var(--bg);
-    animation: revealBox 1s forwards ease-out;
-  }
-  @keyframes revealBox {
-    0% { opacity: 1; transform: scale(1.05); }
-    100% { opacity: 0; transform: scale(0.5); }
-  }
+  .hero-image { width: 100%; display: block; height: auto; }
+  .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); }
+  .grid-box { background-color: var(--bg); animation: revealBox 1s forwards ease-out; }
+  @keyframes revealBox { 0% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0; transform: scale(0.5); } }
 
-  /* تنسيق الشبكة الجديدة (قسمين بجانب بعض) */
-  .content-layout {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
-    align-items: start;
+  /* Section Toggles (الزرارين الكبار) */
+  .section-tabs {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+    margin-bottom: 40px;
   }
-  @media (max-width: 900px) {
-    .content-layout {
-      grid-template-columns: 1fr; /* يتحول لقسم واحد تحت الآخر في الشاشات الصغيرة */
-    }
-  }
-
-  /* تنسيق الأقسام */
-  .section-container {
-    background: rgba(22, 19, 46, 0.5);
-    border: 1px solid var(--border);
-    border-radius: 24px;
-    padding: 24px;
-  }
-  .section-title {
-    font-size: 1.5rem;
+  .tab-btn {
+    flex: 1;
+    max-width: 300px;
+    padding: 16px;
+    font-size: 1.2rem;
     font-weight: 800;
-    color: var(--cyan);
-    margin-bottom: 24px;
+    font-family: 'Tajawal', sans-serif;
+    border-radius: 16px;
+    border: 2px solid var(--primary);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    transition: all 0.3s;
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 10px;
-    border-bottom: 1px solid var(--border);
-    padding-bottom: 15px;
   }
+  .tab-btn.active {
+    background: linear-gradient(135deg, var(--primary), #8B5CF6);
+    color: white;
+    box-shadow: 0 8px 25px rgba(108,63,232,0.4);
+    border-color: transparent;
+    transform: translateY(-3px);
+  }
+  .tab-btn:hover:not(.active) { background: rgba(108,63,232,0.1); }
+
+  /* Sections Content */
+  .content-section { display: none; animation: fadeIn 0.4s ease; }
+  .content-section.active { display: block; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
   /* User card */
-  .user-card{
-    background:var(--card);border:1px solid var(--border);border-radius:20px;
-    padding:24px 28px;margin-bottom:24px;
-    display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;
-  }
+  .user-card{ background:var(--card);border:1px solid var(--border);border-radius:20px; padding:24px 28px;margin-bottom:32px; display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px; }
   .user-info{display:flex;align-items:center;gap:14px;}
   .avatar{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--primary),#8B5CF6);display:flex;align-items:center;justify-content:center;font-size:1.4rem;font-weight:900;}
   .user-name{font-size:1.1rem;font-weight:700;}
@@ -107,104 +89,65 @@
   .u-stat{text-align:center;}
   .u-stat-val{font-size:1.3rem;font-weight:900;color:var(--secondary);}
   .u-stat-label{font-size:0.75rem;color:var(--muted);}
-
+  
   /* Support toggle */
-  .support-toggle{
-    display:flex;align-items:center;gap:12px;
-    background:rgba(108,63,232,0.1);border:1px solid var(--border);
-    border-radius:14px;padding:12px 18px;cursor:pointer;
-    transition:all 0.2s;margin-bottom:24px;
-  }
+  .support-toggle{ display:flex;align-items:center;gap:12px; background:rgba(108,63,232,0.1);border:1px solid var(--border); border-radius:14px;padding:12px 18px;cursor:pointer; transition:all 0.2s;margin-bottom:28px; }
   .support-toggle:hover{background:rgba(108,63,232,0.2);}
   .toggle-switch{width:40px;height:22px;background:#333;border-radius:11px;position:relative;transition:background 0.2s;}
   .toggle-switch.on{background:var(--primary);}
   .toggle-knob{width:18px;height:18px;background:white;border-radius:50%;position:absolute;top:2px;left:2px;transition:left 0.2s;}
   .toggle-switch.on .toggle-knob{left:20px;}
-
-  /* Subjects grid */
-  .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:20px;}
-  .subject-card{
-    background:var(--card);border:1px solid var(--border);border-radius:22px;
-    padding:20px;transition:all 0.3s;position:relative;overflow:hidden;
-  }
-  .subject-card::before{
-    content:'';position:absolute;top:0;right:0;width:100px;height:100px;
-    background:radial-gradient(circle,rgba(108,63,232,0.1),transparent);
-    border-radius:50%;transform:translate(30%,-30%);
-  }
-  .subject-card:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(0,0,0,0.4);border-color:var(--primary);}
-  .subject-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
-  .subject-icon{font-size:1.8rem;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(108,63,232,0.15);border-radius:12px;}
-  .subject-title{font-size:1.05rem;font-weight:800;}
-  .subject-desc{font-size:0.75rem;color:var(--muted);}
-  .progress-bar-wrap{margin-bottom:14px;}
-  .progress-label{display:flex;justify-content:space-between;font-size:0.75rem;color:var(--muted);margin-bottom:6px;}
-  .progress-bar{height:6px;background:var(--card2);border-radius:10px;overflow:hidden;}
-  .progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--cyan));transition:width 0.6s ease;}
-  .subject-stats{display:flex;gap:10px;margin-bottom:18px;}
-  .s-stat{flex:1;background:var(--card2);border-radius:10px;padding:8px;text-align:center;}
-  .s-stat-val{font-size:1rem;font-weight:800;color:var(--secondary);}
-  .s-stat-label{font-size:0.7rem;color:var(--muted);}
-  .subject-actions{display:flex;gap:8px;}
-  .btn-info, .btn-start{
-    flex:1;padding:8px;border-radius:10px; font-family:'Tajawal',sans-serif;
-    font-size:0.85rem;cursor:pointer;transition:all 0.2s; text-align:center; text-decoration:none;
-  }
-  .btn-info{border:1px solid var(--border);background:transparent;color:var(--muted);}
-  .btn-info:hover{border-color:var(--primary);color:var(--text);}
-  .btn-start{border:none;background:linear-gradient(135deg,var(--primary),#8B5CF6);color:white;font-weight:700;}
-  .btn-start:hover{transform:translateY(-2px);box-shadow:0 4px 15px rgba(108,63,232,0.4);}
-
-  /* Quiz Section Styles */
-  .quiz-buttons-container { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 24px; }
-  .quiz-tab-btn {
-    background: var(--card2); border: 1px solid var(--border); color: var(--text);
-    padding: 10px 16px; border-radius: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif;
-    font-size: 0.9rem; font-weight: 700; transition: all 0.3s;
-    display: flex; align-items: center; gap: 8px; flex: 1; min-width: 120px; justify-content: center;
-  }
-  .quiz-tab-btn:hover, .quiz-tab-btn.active {
-    background: var(--primary); border-color: var(--primary); box-shadow: 0 4px 15px rgba(108,63,232,0.4);
-  }
-  .quiz-area {
-    background: var(--card); border: 1px solid var(--border); border-radius: 20px; padding: 24px;
-    min-height: 250px; display: flex; flex-direction: column; justify-content: center;
-  }
-  .quiz-question { font-size: 1.3rem; font-weight: 800; margin-bottom: 20px; text-align: center; color: var(--secondary); }
-  .quiz-options { display: flex; flex-direction: column; gap: 12px; }
-  .quiz-option-btn {
-    background: var(--card2); border: 1px solid var(--border); color: var(--text);
-    padding: 14px; border-radius: 12px; cursor: pointer; font-family: 'Tajawal', sans-serif;
-    font-size: 1rem; text-align: right; transition: all 0.2s;
-  }
-  .quiz-option-btn:hover { background: rgba(108,63,232,0.2); border-color: var(--primary); }
-  .quiz-option-btn.correct-ans { background: var(--green); color: #000; border-color: var(--green); }
-  .quiz-option-btn.wrong-ans { background: var(--accent); color: #fff; border-color: var(--accent); }
-  .quiz-feedback { text-align: center; font-size: 1.1rem; font-weight: bold; margin-top: 15px; height: 25px; }
-
-  /* Quick nav */
-  .quick-nav{
-    display:flex;gap:12px;flex-wrap:wrap;justify-content:center;
-    padding:40px 0 0;
-  }
-  .quick-nav a{
-    display:flex;align-items:center;gap:8px;
-    background:var(--card);border:1px solid var(--border);
-    border-radius:50px;padding:10px 22px;
-    color:var(--cyan);text-decoration:none;
-    font-size:0.88rem;font-weight:600;
-    transition:all 0.2s;
-  }
-  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
   
-  /* Toast & Modal */
-  .toast{
-    position:fixed;bottom:30px;left:50%;transform:translateX(-50%);
-    background:var(--green);color:#0D0B1E;
-    padding:14px 28px;border-radius:50px;font-weight:700;
-    font-family:'Tajawal',sans-serif;font-size:0.95rem;
-    opacity:0;transition:opacity 0.3s;z-index:2000; pointer-events:none;
-  }
+  /* Subjects grid */
+  .subjects-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:22px;}
+  .subject-card{ background:var(--card);border:1px solid var(--border);border-radius:22px; padding:28px;transition:all 0.3s;position:relative;overflow:hidden; }
+  .subject-card::before{ content:'';position:absolute;top:0;right:0;width:100px;height:100px; background:radial-gradient(circle,rgba(108,63,232,0.1),transparent); border-radius:50%;transform:translate(30%,-30%); }
+  .subject-card:hover{transform:translateY(-6px);box-shadow:0 20px 50px rgba(0,0,0,0.4);border-color:var(--primary);}
+  .subject-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .subject-icon{font-size:2.2rem;width:56px;height:56px;display:flex;align-items:center;justify-content:center;background:rgba(108,63,232,0.15);border-radius:16px;}
+  .subject-title{font-size:1.15rem;font-weight:800;}
+  .subject-desc{font-size:0.82rem;color:var(--muted);}
+  .progress-bar-wrap{margin-bottom:14px;}
+  .progress-label{display:flex;justify-content:space-between;font-size:0.78rem;color:var(--muted);margin-bottom:6px;}
+  .progress-bar{height:8px;background:var(--card2);border-radius:10px;overflow:hidden;}
+  .progress-fill{height:100%;border-radius:10px;background:linear-gradient(90deg,var(--primary),var(--cyan));transition:width 0.6s ease;}
+  .subject-stats{display:flex;gap:16px;margin-bottom:18px;}
+  .s-stat{flex:1;background:var(--card2);border-radius:12px;padding:10px;text-align:center;}
+  .s-stat-val{font-size:1.1rem;font-weight:800;color:var(--secondary);}
+  .s-stat-label{font-size:0.72rem;color:var(--muted);}
+  .subject-actions{display:flex;gap:10px;}
+  .btn-info{ flex:1;padding:11px;border:1px solid var(--border);border-radius:12px; background:transparent;color:var(--muted);cursor:pointer; font-family:'Tajawal',sans-serif;font-size:0.88rem; transition:all 0.2s; }
+  .btn-info:hover{border-color:var(--primary);color:var(--text);}
+  .btn-start{ flex:2;padding:11px;border:none;border-radius:12px; background:linear-gradient(135deg,var(--primary),#8B5CF6); color:white;cursor:pointer;font-family:'Tajawal',sans-serif; font-size:0.95rem;font-weight:700; transition:all 0.2s; box-shadow:0 4px 15px rgba(108,63,232,0.4); text-decoration:none; display:flex; align-items:center; justify-content:center; }
+  .btn-start:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(108,63,232,0.5);}
+  
+  /* Tests Section Styles */
+  .exams-list { margin-top: 15px; display: flex; flex-direction: column; gap: 10px; }
+  .exam-btn { background: var(--card2); border: 1px solid var(--border); padding: 12px; border-radius: 12px; color: var(--text); cursor: pointer; transition: 0.2s; font-family: inherit; font-size: 0.95rem; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
+  .exam-btn:hover { background: var(--primary); border-color: var(--primary); transform: translateX(-5px); }
+  
+  /* Quiz Interface */
+  #quizInterface { display: none; background: var(--card); border: 1px solid var(--border); border-radius: 24px; padding: 30px; margin-top: 20px; }
+  .quiz-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--card2); padding-bottom: 15px; margin-bottom: 25px; }
+  .quiz-title { font-size: 1.4rem; font-weight: 800; color: var(--primary); }
+  .quiz-progress { font-size: 1rem; color: var(--secondary); font-weight: bold; }
+  .question-text { font-size: 1.2rem; font-weight: 700; margin-bottom: 20px; line-height: 1.6; }
+  .options-container { display: flex; flex-direction: column; gap: 12px; }
+  .option-btn { background: var(--card2); border: 1px solid var(--border); padding: 16px; border-radius: 12px; color: var(--text); cursor: pointer; text-align: right; font-family: inherit; font-size: 1.05rem; transition: 0.2s; }
+  .option-btn:hover { background: rgba(108,63,232,0.2); }
+  .option-btn.selected { background: var(--primary); border-color: var(--primary); font-weight: bold; }
+  .quiz-nav-btns { display: flex; justify-content: space-between; margin-top: 30px; }
+  .q-btn { padding: 12px 24px; border-radius: 12px; border: none; font-family: inherit; font-weight: bold; cursor: pointer; transition: 0.2s; font-size: 1rem; }
+  .q-btn-prev { background: var(--card2); color: var(--text); }
+  .q-btn-next { background: var(--green); color: #0D0B1E; }
+  .q-btn-submit { background: var(--secondary); color: #0D0B1E; display: none; }
+  .q-btn:hover { transform: translateY(-2px); opacity: 0.9; }
+  .q-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .quiz-result { text-align: center; padding: 30px 0; display: none; }
+  .result-score { font-size: 3rem; font-weight: 900; color: var(--secondary); margin: 20px 0; }
+  .btn-close-quiz { background: var(--card2); color: var(--text); border: 1px solid var(--border); padding: 12px 30px; border-radius: 12px; font-family: inherit; font-weight: bold; cursor: pointer; margin-top: 20px; }
+
+  /* Modal & Toast */
   .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.7);z-index:1000;align-items:center;justify-content:center;padding:20px;}
   .modal-overlay.open{display:flex;}
   .modal{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:36px;max-width:500px;width:100%;animation:slideUp 0.3s ease;}
@@ -212,6 +155,12 @@
   .modal-close{float:left;background:none;border:none;color:var(--muted);font-size:1.4rem;cursor:pointer;line-height:1;}
   .modal-title{font-size:1.4rem;font-weight:900;margin-bottom:16px;}
   .modal-body{color:var(--muted);line-height:1.8;font-size:0.95rem;}
+  
+  .quick-nav{ display:flex;gap:12px;flex-wrap:wrap;justify-content:center; padding:40px 0 0; }
+  .quick-nav a{ display:flex;align-items:center;gap:8px; background:var(--card);border:1px solid var(--border); border-radius:50px;padding:10px 22px; color:var(--cyan);text-decoration:none; font-size:0.88rem;font-weight:600; transition:all 0.2s; }
+  .quick-nav a:hover{border-color:var(--cyan);transform:translateY(-2px);}
+  
+  .toast{ position:fixed;bottom:30px;left:50%;transform:translateX(-50%); background:var(--green);color:#0D0B1E; padding:14px 28px;border-radius:50px;font-weight:700; font-family:'Tajawal',sans-serif;font-size:0.95rem; opacity:0;transition:opacity 0.3s;z-index:2000; pointer-events:none; }
 </style>
 </head>
 <body>
@@ -229,87 +178,105 @@
 
 <div class="main">
   <div class="page-header">
-    <h1>📚 منصة التعلم التفاعلية</h1>
-    <p>ادرس موادك واختبر معلوماتك في نفس الوقت لتكسب النقاط والإنجازات!</p>
+    <h1>📚 المواد والاختبارات</h1>
+    <p>اختر بين مواد التعلم للمذاكرة، أو الاختبارات لتقييم مستواك!</p>
   </div>
 
-  <!-- صورة الهيدر -->
   <div class="hero-image-container">
-    <img src="img5.jpeg" alt="صورة توضيحية" class="hero-image">
+    <img src="img5.jpeg" alt="صورة توضيحية" class="hero-image" onerror="this.src='https://via.placeholder.com/800x400/16132E/6C3FE8?text=أفق+التعليمية'">
     <div class="grid-overlay" id="gridOverlay"></div>
   </div>
 
-  <!-- التخطيط الجديد المزدوج -->
-  <div class="content-layout">
-    
-    <!-- القسم الأول: الدراسة والتعلم -->
-    <div class="section-container">
-      <h2 class="section-title">📖 قسم الدراسة والتعلم</h2>
-      
-      <div class="user-card" id="userCard">
-        <div class="user-info">
-          <div class="avatar" id="avatarEl">👤</div>
-          <div>
-            <div class="user-name" id="userName">زائر</div>
-            <div class="user-level" id="userLevel">المستوى 1 — مبتدئ</div>
-          </div>
-        </div>
-        <div class="user-stats">
-          <div class="u-stat">
-            <div class="u-stat-val" id="totalPts">0</div>
-            <div class="u-stat-label">إجمالي النقاط</div>
-          </div>
-          <div class="u-stat">
-            <div class="u-stat-val" id="streakVal">0</div>
-            <div class="u-stat-label">أيام متتالية</div>
-          </div>
-          <div class="u-stat">
-            <div class="u-stat-val" id="badgeCount">0/8</div>
-            <div class="u-stat-label">الإنجازات</div>
-          </div>
-        </div>
-      </div>
-
-      <div class="support-toggle" id="supportToggle" onclick="toggleSupport()">
-        <div class="toggle-switch" id="supportSwitch">
-          <div class="toggle-knob"></div>
-        </div>
-        <div>
-          <div style="font-weight:700;font-size:0.95rem;">✨ وضع الدعم</div>
-          <div style="font-size:0.8rem;color:var(--muted);">تلميحات ومساعدة إضافية لكل مادة</div>
-        </div>
-      </div>
-
-      <div class="subjects-grid" id="subjectsGrid"></div>
-    </div>
-
-    <!-- القسم الثاني: الاختبارات -->
-    <div class="section-container">
-      <h2 class="section-title">📝 قسم الاختبارات التفاعلية</h2>
-      
-      <div class="quiz-buttons-container" id="quizTabs">
-        <!-- سيتم توليد الأزرار بواسطة الجافاسكربت -->
-      </div>
-
-      <div class="quiz-area" id="quizArea">
-        <div class="quiz-question" id="quizQuestion">اختر مادة من الأعلى لتبدأ الاختبار الممتع!</div>
-        <div class="quiz-options" id="quizOptions">
-          <!-- خيارات الإجابة ستظهر هنا -->
-        </div>
-        <div class="quiz-feedback" id="quizFeedback"></div>
-      </div>
-    </div>
-
-  </div> <!-- نهاية content-layout -->
-
-  <div class="quick-nav">
-    <a href="progress.html">◀ لوحة التقدم</a>
-    <a href="badges.html">◀ معرض الإنجازات</a>
-    <a href="parent.html">◀ متابعة ولي الأمر</a>
+  <!-- أزرار التبديل -->
+  <div class="section-tabs">
+    <button class="tab-btn active" id="btnStudy" onclick="switchSection('study')">
+      📖 مواد التعلم
+    </button>
+    <button class="tab-btn" id="btnTests" onclick="switchSection('tests')">
+      📝 قسم الاختبارات
+    </button>
   </div>
+
+  <!-- قسم الدراسة والتعلم (القديم كما هو) -->
+  <div id="studySection" class="content-section active">
+    <div class="user-card" id="userCard">
+      <div class="user-info">
+        <div class="avatar" id="avatarEl">👤</div>
+        <div>
+          <div class="user-name" id="userName">زائر</div>
+          <div class="user-level" id="userLevel">المستوى 1 — مبتدئ</div>
+        </div>
+      </div>
+      <div class="user-stats">
+        <div class="u-stat">
+          <div class="u-stat-val" id="totalPts">0</div>
+          <div class="u-stat-label">إجمالي النقاط</div>
+        </div>
+        <div class="u-stat">
+          <div class="u-stat-val" id="streakVal">0</div>
+          <div class="u-stat-label">أيام متتالية</div>
+        </div>
+        <div class="u-stat">
+          <div class="u-stat-val" id="badgeCount">0/8</div>
+          <div class="u-stat-label">الإنجازات</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="support-toggle" id="supportToggle" onclick="toggleSupport()">
+      <div class="toggle-switch" id="supportSwitch">
+        <div class="toggle-knob"></div>
+      </div>
+      <div>
+        <div style="font-weight:700;font-size:0.95rem;">✨ وضع الدعم</div>
+        <div style="font-size:0.8rem;color:var(--muted);">تلميحات ومساعدة إضافية لكل مادة</div>
+      </div>
+    </div>
+
+    <div class="subjects-grid" id="subjectsGrid"></div>
+
+    <div class="quick-nav">
+      <a href="progress.html">◀ لوحة التقدم</a>
+      <a href="badges.html">◀ معرض الإنجازات</a>
+      <a href="parent.html">◀ متابعة ولي الأمر</a>
+    </div>
+  </div>
+
+  <!-- قسم الاختبارات (الجديد) -->
+  <div id="testsSection" class="content-section">
+    <div id="testsGrid" class="subjects-grid"></div>
+
+    <!-- واجهة الاختبار التفاعلي -->
+    <div id="quizInterface">
+      <div id="quizContent">
+        <div class="quiz-header">
+          <div class="quiz-title" id="qTitle">امتحان الرياضيات</div>
+          <div class="quiz-progress" id="qProgress">سؤال 1 / 10</div>
+        </div>
+        <div class="question-text" id="qText">نص السؤال هنا؟</div>
+        <div class="options-container" id="qOptions">
+          <!-- Options generated by JS -->
+        </div>
+        <div class="quiz-nav-btns">
+          <button class="q-btn q-btn-prev" id="btnPrev" onclick="prevQuestion()">السابق</button>
+          <button class="q-btn q-btn-next" id="btnNext" onclick="nextQuestion()">التالي</button>
+          <button class="q-btn q-btn-submit" id="btnSubmit" onclick="submitQuiz()">إنهاء وتصحيح</button>
+        </div>
+      </div>
+      
+      <!-- نتيجة الاختبار -->
+      <div id="quizResult" class="quiz-result">
+        <h2>🎉 اكتمل الاختبار!</h2>
+        <div class="result-score" id="resultScore">8 / 10</div>
+        <p id="resultMsg" style="color:var(--muted); margin-bottom: 20px;">أحسنت! تم إضافة النقاط لرصيدك.</p>
+        <button class="btn-close-quiz" onclick="closeQuiz()">العودة للاختبارات</button>
+      </div>
+    </div>
+  </div>
+
 </div>
 
-<!-- المودال والإشعارات -->
+<!-- Modals & Toasts -->
 <div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
   <div class="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
@@ -317,11 +284,10 @@
     <div class="modal-body" id="modalBody"></div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-// كود تشغيل أنيميشن المربعات للصورة
+// تأثير المربعات
 const gridOverlay = document.getElementById('gridOverlay');
 if(gridOverlay) {
   for(let i=0; i<60; i++) {
@@ -333,40 +299,124 @@ if(gridOverlay) {
   setTimeout(() => gridOverlay.style.display = 'none', 2500);
 }
 
-// بيانات المواد الأساسية
+// بيانات المواد
 const SUBJECTS = [
-  { key:'math', icon:'🔢', name:'الرياضيات', desc:'الأعداد والعمليات الحسابية', color:'#6C3FE8', info:'مادة الرياضيات تشمل العمليات الحسابية الأساسية.' },
-  { key:'arabic', icon:'📖', name:'اللغة العربية', desc:'القراءة والكتابة والإملاء', color:'#F7B731', info:'اللغة العربية هي لغة القرآن الكريم ولغتنا الأم.' },
-  { key:'science', icon:'🔬', name:'العلوم', desc:'اكتشاف الطبيعة والكون', color:'#26de81', info:'العلوم تفتح لك أبواب عجائب الكون!' },
-  { key:'english', icon:'🌍', name:'اللغة الإنجليزية', desc:'تعلم الإنجليزية بطريقة ممتعة', color:'#00D2D3', info:'الإنجليزية هي لغة العالم!' },
-  { key:'art', icon:'🎨', name:'الفنون', desc:'الإبداع والتعبير الفني', color:'#FF6B6B', info:'الفنون تنمّي إبداعك وخيالك!' },
-  { key:'islamic', icon:'⭐', name:'التربية الإسلامية', desc:'القرآن والأخلاق والقيم', color:'#F7B731', info:'التربية الإسلامية تعلمك القرآن الكريم وتفسيره.' },
+  { key:'math', icon:'🔢', name:'الرياضيات', desc:'الأعداد والعمليات الحسابية', color:'#6C3FE8', info:'مادة الرياضيات تشمل العمليات الحسابية الأساسية...'},
+  { key:'arabic', icon:'📖', name:'اللغة العربية', desc:'القراءة والكتابة والإملاء', color:'#F7B731', info:'اللغة العربية هي لغة القرآن الكريم...'},
+  { key:'science', icon:'🔬', name:'العلوم', desc:'اكتشاف الطبيعة والكون', color:'#26de81', info:'العلوم تفتح لك أبواب عجائب الكون...'},
+  { key:'english', icon:'🌍', name:'اللغة الإنجليزية', desc:'تعلم الإنجليزية بطريقة ممتعة', color:'#00D2D3', info:'الإنجليزية هي لغة العالم!...'},
+  { key:'art', icon:'🎨', name:'الفنون', desc:'الإبداع والتعبير الفني', color:'#FF6B6B', info:'الفنون تنمّي إبداعك وخيالك!...'},
+  { key:'islamic', icon:'⭐', name:'التربية الإسلامية', desc:'القرآن والأخلاق والقيم', color:'#F7B731', info:'التربية الإسلامية تعلمك القرآن الكريم...'}
 ];
 
-// بيانات الاختبارات التفاعلية
-const QUIZZES = {
-  math: { q: "كم نتيجة جمع 7 + 5 ؟", opts: ["10", "11", "12", "13"], ans: 2 },
-  arabic: { q: "ما هو مضاد (عكس) كلمة 'سعيد'؟", opts: ["مبتسم", "حزين", "غاضب", "فرحان"], ans: 1 },
-  science: { q: "أي من هذه الكواكب نعيش عليه؟", opts: ["كوكب المريخ", "كوكب المشتري", "كوكب زحل", "كوكب الأرض"], ans: 3 },
-  english: { q: "Choose the correct translation for 'كتاب':", opts: ["Pen", "Bag", "Book", "Desk"], ans: 2 },
-  art: { q: "عند دمج اللونين الأزرق والأصفر معاً، نحصل على اللون:", opts: ["الأحمر", "الأخضر", "البرتقالي", "البنفسجي"], ans: 1 },
-  islamic: { q: "كم عدد أركان الإسلام؟", opts: ["3 أركان", "4 أركان", "5 أركان", "6 أركان"], ans: 2 }
+// بنك الأسئلة (120 سؤال: كل مادة امتحانين، كل امتحان 10 أسئلة)
+const QUIZ_DATA = {
+  math: [
+    { title: "الامتحان الأول (الجمع والطرح)", questions: [
+      {q:"5 + 3 = ?", o:["7","8","9","6"], a:1}, {q:"10 - 4 = ?", o:["5","6","7","8"], a:1},
+      {q:"12 + 5 = ?", o:["15","16","17","18"], a:2}, {q:"20 - 10 = ?", o:["5","10","15","20"], a:1},
+      {q:"8 + 8 = ?", o:["14","15","16","17"], a:2}, {q:"15 - 7 = ?", o:["6","7","8","9"], a:2},
+      {q:"9 + 4 = ?", o:["12","13","14","15"], a:1}, {q:"18 - 9 = ?", o:["7","8","9","10"], a:2},
+      {q:"25 + 5 = ?", o:["20","25","30","35"], a:2}, {q:"30 - 15 = ?", o:["10","15","20","25"], a:1}
+    ]},
+    { title: "الامتحان الثاني (الضرب والقسمة)", questions: [
+      {q:"2 × 3 = ?", o:["5","6","7","8"], a:1}, {q:"10 ÷ 2 = ?", o:["4","5","6","7"], a:1},
+      {q:"4 × 4 = ?", o:["12","14","16","18"], a:2}, {q:"20 ÷ 4 = ?", o:["3","4","5","6"], a:2},
+      {q:"5 × 5 = ?", o:["20","25","30","35"], a:1}, {q:"15 ÷ 3 = ?", o:["3","4","5","6"], a:2},
+      {q:"6 × 3 = ?", o:["15","18","21","24"], a:1}, {q:"18 ÷ 2 = ?", o:["7","8","9","10"], a:2},
+      {q:"7 × 2 = ?", o:["12","14","16","18"], a:1}, {q:"100 ÷ 10 = ?", o:["5","10","15","20"], a:1}
+    ]}
+  ],
+  arabic: [
+    { title: "الامتحان الأول (النحو والقواعد)", questions: [
+      {q:"كلمة (طالب) هي:", o:["اسم","فعل","حرف","شبه جملة"], a:0}, {q:"مضاد كلمة (طويل):", o:["كبير","قصير","صغير","عريض"], a:1},
+      {q:"جمع كلمة (كتاب):", o:["كاتبون","كُتّاب","كُتب","مكتبات"], a:2}, {q:"الفعل الماضي من (يأكل):", o:["أكل","كُل","آكل","مأكول"], a:0},
+      {q:"(الشمس مشرقة) نوع الجملة:", o:["فعلية","اسمية","شبه جملة","استفهامية"], a:1}, {q:"حرف الجر في (ذهبت إلى المدرسة):", o:["ذهبت","المدرسة","إلى","لا يوجد"], a:2},
+      {q:"مثنى كلمة (ولد):", o:["أولاد","ولدان","ولود","والدان"], a:1}, {q:"مرادف كلمة (سعيد):", o:["حزين","مسرور","غاضب","خائف"], a:1},
+      {q:"(يكتب الطالب الدرس) الفاعل هنا:", o:["يكتب","الطالب","الدرس","مستتر"], a:1}, {q:"علامة الرفع للمبتدأ المفرد:", o:["الفتحة","الكسرة","الضمة","السكون"], a:2}
+    ]},
+    { title: "الامتحان الثاني (الإملاء والقراءة)", questions: [
+      {q:"الكلمة الصحيحة إملائياً:", o:["سيارة","سيارت","سياراه","سيارا"], a:0}, {q:"حرف المد في كلمة (عصِير):", o:["الألف","الواو","الياء","الراء"], a:2},
+      {q:"أين تكتب الهمزة في كلمة (سماء):", o:["على الألف","على السطر","على الواو","على الياء"], a:1}, {q:"كلمة تبدأ بـ (ال) الشمسية:", o:["القمر","البيت","الشمس","الكتاب"], a:2},
+      {q:"حروف المد هي:", o:["أ، و، ي","ب، ت، ث","س، ش، ص","ل، م، ن"], a:0}, {q:"علامة الترقيم في نهاية السؤال:", o:["نقطة .","فاصلة ،","استفهام ؟","تعجب !"], a:2},
+      {q:"كلمة (مكتبة) تنتهي بـ:", o:["تاء مفتوحة","هاء","تاء مربوطة","ألف"], a:2}, {q:"أداة الاستفهام للمكان:", o:["متى","أين","كيف","لماذا"], a:1},
+      {q:"(يا أحمد!) هذا أسلوب:", o:["نفي","أمر","نداء","استفهام"], a:2}, {q:"الحرف المشدد يقرأ:", o:["مرة واحدة","مرتين","ثلاث مرات","لا يقرأ"], a:1}
+    ]}
+  ],
+  science: [
+    { title: "الامتحان الأول (الكائنات الحية)", questions: [
+      {q:"الجزء الذي يمتص الماء في النبات:", o:["الأوراق","الساق","الجذر","الزهرة"], a:2}, {q:"من الحيوانات اللاحمة (تأكل اللحوم):", o:["البقرة","الأسد","الأرنب","الخروف"], a:1},
+      {q:"عملية صنع الغذاء في النبات تسمى:", o:["التنفس","البناء الضوئي","الهضم","التكاثر"], a:1}, {q:"الحيوان الذي يعيش في الماء ويتنفس بالخياشيم:", o:["الضفدع","السمكة","التمساح","البطريق"], a:1},
+      {q:"تغطي جسم الطيور:", o:["شعر","حراشف","ريش","صوف"], a:2}, {q:"عضو حاسة البصر:", o:["الأنف","الأذن","العين","اللسان"], a:2},
+      {q:"الأسماك تتكاثر بـ:", o:["الولادة","البيض","الانقسام","البذور"], a:1}, {q:"تحتاج النباتات لتنمو إلى:", o:["ماء وشمس","ظلام فقط","تربة جافة","رياح قوية"], a:0},
+      {q:"من الحشرات:", o:["العنكبوت","النحلة","العقرب","الدودة"], a:1}, {q:"الحيوان الذي يغطي جسمه الصدفة:", o:["السلحفاة","الثعبان","القط","الضفدع"], a:0}
+    ]},
+    { title: "الامتحان الثاني (المادة والطاقة)", questions: [
+      {q:"حالة الماء عند تجمده:", o:["سائلة","غازية","صلبة","متبخرة"], a:2}, {q:"المصدر الرئيسي للضوء والحرارة للأرض:", o:["القمر","النجوم","الشمس","المصابيح"], a:2},
+      {q:"المادة التي تأخذ شكل الوعاء الذي توضع فيه:", o:["الصلبة","السائلة","الجليد","الخشب"], a:1}, {q:"القوة التي تسحب الأشياء للأرض:", o:["الاحتكاك","المغناطيسية","الجاذبية","الدفع"], a:2},
+      {q:"الكوكب الذي نعيش عليه:", o:["المريخ","الأرض","المشتري","زحل"], a:1}, {q:"تحول الماء لغاز يسمى:", o:["تكثف","تبخر","تجمد","انصهار"], a:1},
+      {q:"المغناطيس يجذب:", o:["الخشب","البلاستيك","الحديد","الزجاج"], a:2}, {q:"صوت الرعد ينتج عن طاقة:", o:["صوتية","ضوئية","حرارية","مغناطيسية"], a:0},
+      {q:"من مصادر الطاقة المتجددة:", o:["الفحم","النفط","الرياح","الغاز"], a:2}, {q:"الظل يتكون عندما:", o:["يعبر الضوء","يحجب الجسم الضوء","ينعكس الضوء","ينكسر الضوء"], a:1}
+    ]}
+  ],
+  english: [
+    { title: "الامتحان الأول (Vocab & Basics)", questions: [
+      {q:"معنى كلمة Apple:", o:["موزة","تفاحة","برتقالة","بطيخ"], a:1}, {q:"الرقم 5 بالإنجليزية:", o: ["Four","Five","Six","Seven"], a:1},
+      {q:"لون السماء (أزرق):", o:["Red","Green","Blue","Yellow"], a:2}, {q:"عكس كلمة Hot:", o:["Warm","Cold","Big","Small"], a:1},
+      {q:"معنى كلمة Cat:", o:["كلب","قطة","فأر","طائر"], a:1}, {q:"الرقم 10:", o:["Ten","Nine","Eight","Two"], a:0},
+      {q:"كلمة (شمس):", o:["Moon","Star","Sun","Sky"], a:2}, {q:"لون الموز:", o:["Red","Yellow","Blue","Black"], a:1},
+      {q:"عضو (العين) بالإنجليزية:", o:["Ear","Nose","Eye","Mouth"], a:2}, {q:"عكس Good:", o:["Sad","Bad","Happy","Tall"], a:1}
+    ]},
+    { title: "الامتحان الثاني (Grammar)", questions: [
+      {q:"I ___ a student.", o:["am","is","are","be"], a:0}, {q:"He ___ playing football.", o:["am","is","are","were"], a:1},
+      {q:"They ___ happy.", o:["am","is","are","was"], a:2}, {q:"___ is your name?", o:["Who","What","Where","When"], a:1},
+      {q:"This is ___ apple.", o:["a","an","the","no article"], a:1}, {q:"She ___ to school every day.", o:["go","goes","going","gone"], a:1},
+      {q:"___ are you from?", o:["Who","Where","What","Why"], a:1}, {q:"We ___ a new car.", o:["has","have","having","had"], a:1},
+      {q:"Plural of 'Box':", o:["Boxs","Boxes","Boxen","Boxies"], a:1}, {q:"Past tense of 'Play':", o:["Plays","Playing","Played","Player"], a:2}
+    ]}
+  ],
+  art: [
+    { title: "الامتحان الأول (الألوان)", questions: [
+      {q:"من الألوان الأساسية:", o:["الأخضر","الأحمر","البرتقالي","البنفسجي"], a:1}, {q:"خلط الأحمر والأصفر يعطي:", o:["أخضر","برتقالي","بنفسجي","بني"], a:1},
+      {q:"لون السماء الصافية:", o:["أزرق","أخضر","أحمر","أصفر"], a:0}, {q:"من الألوان الباردة:", o:["الأحمر","البرتقالي","الأزرق","الأصفر"], a:2},
+      {q:"الأبيض والأسود يعتبران من الألوان:", o:["الأساسية","الفرعية","المحايدة","الساخنة"], a:2}, {q:"خلط الأزرق والأصفر يعطي:", o:["أحمر","برتقالي","أخضر","بنفسجي"], a:2},
+      {q:"اللون المعاكس للأصفر:", o:["أزرق","بنفسجي","أحمر","أخضر"], a:1}, {q:"من الألوان الساخنة:", o:["الأزرق","الأخضر","الأحمر","الرمادي"], a:2},
+      {q:"لون أوراق الشجر:", o:["أحمر","أصفر","أخضر","أزرق"], a:2}, {q:"للحصول على لون وردي نخلط الأبيض مع:", o:["الأسود","الأزرق","الأحمر","الأصفر"], a:2}
+    ]},
+    { title: "الامتحان الثاني (الأدوات والأشكال)", questions: [
+      {q:"أداة تستخدم لقص الورق:", o:["المسطرة","المقص","الفرشاة","القلم"], a:1}, {q:"الشكل الذي ليس له زوايا:", o:["المربع","المثلث","الدائرة","المستطيل"], a:2},
+      {q:"تستخدم لخلط الألوان المائية:", o:["الباليتة (لوح الألوان)","الممحاة","المسطرة","الفرجار"], a:0}, {q:"الشكل الذي له 3 أضلاع:", o:["المربع","المستطيل","المثلث","الدائرة"], a:2},
+      {q:"لرسم دائرة دقيقة نستخدم:", o:["المسطرة","الفرجار","الفرشاة","المقص"], a:1}, {q:"الورق المقوى يستخدم في:", o:["التلوين المائي","التشكيل والمجسمات","الكتابة فقط","الطباعة"], a:1},
+      {q:"يسمى فن طي الورق بـ:", o:["النحت","الأوريغامي","الكولاج","الفسيفساء"], a:1}, {q:"الشكل الذي له 4 أضلاع متساوية:", o:["المستطيل","المثلث","المربع","الدائرة"], a:2},
+      {q:"الصلصال مادة تستخدم في فن:", o:["الرسم","التصوير","التشكيل والنحت","الطباعة"], a:2}, {q:"فن لصق قصاصات الورق يسمى:", o:["كولاج","أكواريل","نحت","زخرفة"], a:0}
+    ]}
+  ],
+  islamic: [
+    { title: "الامتحان الأول (العقيدة والقرآن)", questions: [
+      {q:"أول أركان الإسلام:", o:["الصلاة","الزكاة","الشهادتان","الحج"], a:2}, {q:"كتاب الله المنزل على سيدنا محمد:", o:["التوراة","الإنجيل","القرآن الكريم","الزبور"], a:2},
+      {q:"أقصر سورة في القرآن:", o:["الفاتحة","الإخلاص","الكوثر","الناس"], a:2}, {q:"من هو خاتم الأنبياء:", o:["موسى","عيسى","إبراهيم","محمد (ص)"], a:3},
+      {q:"كم عدد أركان الإيمان؟", o:["5","6","7","4"], a:1}, {q:"الصلاة التي تتكون من ركعتين:", o:["الفجر","الظهر","العصر","المغرب"], a:0},
+      {q:"شهر الصوم هو:", o:["شعبان","رمضان","شوال","رجب"], a:1}, {q:"السورة التي تسمى بأم الكتاب:", o:["البقرة","يس","الفاتحة","الكهف"], a:2},
+      {q:"القبلة التي يتجه إليها المسلمون:", o:["المسجد الأقصى","الكعبة المشرفة","المسجد النبوي","جبل عرفات"], a:1}, {q:"الملك الموكل بنزول الوحي:", o:["ميكائيل","إسرافيل","جبريل","عزرائيل"], a:2}
+    ]},
+    { title: "الامتحان الثاني (السيرة والفقه)", questions: [
+      {q:"أين ولد النبي محمد (ص)؟", o:["المدينة","مكة","الطائف","فلسطين"], a:1}, {q:"ما هو الوضوء؟", o:["غسل الجسم كاملاً","غسل أعضاء محددة للنظافة والصلاة","غسل اليدين فقط","غسل الوجه فقط"], a:1},
+      {q:"أول مؤذن في الإسلام:", o:["أبو بكر","عمر بن الخطاب","بلال بن رباح","علي بن أبي طالب"], a:2}, {q:"مرضعة النبي (ص):", o:["آمنة","خديجة","حليمة السعدية","فاطمة"], a:2},
+      {q:"كم عدد الصلوات المفروضة في اليوم؟", o:["3","4","5","6"], a:2}, {q:"صلاة الظهر كم ركعة؟", o:["2","3","4","5"], a:2},
+      {q:"الماء الصالح للوضوء:", o:["ماء البحر","الماء النظيف الطاهر","عصير الفواكه","الماء الملون"], a:1}, {q:"أين يقع المسجد النبوي؟", o:["مكة","المدينة المنورة","القدس","القاهرة"], a:1},
+      {q:"دعاء الدخول للحمام:", o:["بسم الله","اللهم إني أعوذ بك من الخبث والخبائث","الحمد لله","الله أكبر"], a:1}, {q:"من مبطلات الوضوء:", o:["الكلام","النوم العميق","الضحك","الأكل"], a:1}
+    ]}
+  ]
 };
 
+// حالة التطبيق والمستخدم
 let state = {};
-let currentQuizKey = null;
-
-// وظائف التخزين والاسترجاع
-function getState() {
-  try { return JSON.parse(localStorage.getItem('ufuq_data') || '{}'); } catch(e) { return {}; }
-}
+function getState() { try { return JSON.parse(localStorage.getItem('ufuq_data') || '{}'); } catch(e) { return {}; } }
 function saveState(s) { localStorage.setItem('ufuq_data', JSON.stringify(s)); }
 function getTotal(s) { return Object.values(s.points || {}).reduce((a,b)=>a+b,0); }
 function getLevel(p) {
-  if(p>=1000) return {num:5,name:'خبير'};
-  if(p>=500) return {num:4,name:'متقدم'};
-  if(p>=200) return {num:3,name:'متوسط'};
-  if(p>=50) return {num:2,name:'متمكن'};
+  if(p>=1000) return {num:5,name:'خبير'}; if(p>=500) return {num:4,name:'متقدم'};
+  if(p>=200) return {num:3,name:'متوسط'}; if(p>=50) return {num:2,name:'متمكن'};
   return {num:1,name:'مبتدئ'};
 }
 
@@ -374,59 +424,32 @@ function init() {
   state = getState();
   if(!state.points) state.points = {math:0,arabic:0,science:0,english:0,art:0,islamic:0};
   if(!state.activities) state.activities = {math:0,arabic:0,science:0,english:0,art:0,islamic:0};
-  if(!state.badges) state.badges = [];
-  if(!state.streak) state.streak = 0;
-  
-  const today = new Date().toDateString();
-  if(state.lastActive !== today) {
-    const yesterday = new Date(Date.now()-86400000).toDateString();
-    if(state.lastActive === yesterday) state.streak = (state.streak||0) + 1;
-    else if(state.lastActive !== today) state.streak = 1;
-    state.lastActive = today;
-    saveState(state);
-  }
   
   renderUI();
-  renderSubjects();
-  renderQuizTabs();
+  renderStudySubjects();
+  renderTestsSubjects();
 }
 
-// عرض واجهة المستخدم الأساسية
-function renderUI() {
-  const total = getTotal(state);
-  const lvl = getLevel(total);
-  document.getElementById('totalPts').textContent = total;
-  document.getElementById('streakVal').textContent = state.streak || 0;
-  document.getElementById('userLevel').textContent = `المستوى ${lvl.num} — ${lvl.name}`;
-  if(state.user) {
-    document.getElementById('userName').textContent = state.user.name;
-    document.getElementById('avatarEl').textContent = state.user.name[0];
-    document.getElementById('loginLink').textContent = '👤 ' + state.user.name;
+// التبديل بين قسم الدراسة وقسم الاختبارات
+function switchSection(section) {
+  document.getElementById('btnStudy').classList.remove('active');
+  document.getElementById('btnTests').classList.remove('active');
+  document.getElementById('studySection').classList.remove('active');
+  document.getElementById('testsSection').classList.remove('active');
+
+  if(section === 'study') {
+    document.getElementById('btnStudy').classList.add('active');
+    document.getElementById('studySection').classList.add('active');
+  } else {
+    document.getElementById('btnTests').classList.add('active');
+    document.getElementById('testsSection').classList.add('active');
+    document.getElementById('testsGrid').style.display = 'grid';
+    document.getElementById('quizInterface').style.display = 'none';
   }
-  const badges = checkBadges(state);
-  document.getElementById('badgeCount').textContent = badges.length + '/8';
-  const sw = document.getElementById('supportSwitch');
-  if(state.supportMode) sw.classList.add('on'); else sw.classList.remove('on');
 }
 
-function checkBadges(s) {
-  const total = getTotal(s);
-  const badges = [];
-  const acts = Object.values(s.activities||{}).reduce((a,b)=>a+b,0);
-  if(acts>=1) badges.push('first_step');
-  if((s.streak||0)>=3) badges.push('enthusiast');
-  if(total>=1000) badges.push('diamond');
-  if((s.points?.math||0)>=50) badges.push('math_hero');
-  if((s.points?.arabic||0)>=50) badges.push('reader');
-  if((s.points?.science||0)>=50) badges.push('scientist');
-  if((s.correctAnswers||0)>=10) badges.push('quick_mind');
-  if(Object.values(s.points||{}).every(p=>p>0)) badges.push('integrated');
-  state.badges = badges;
-  return badges;
-}
-
-// عرض مواد قسم الدراسة
-function renderSubjects() {
+// رسم مواد التعلم (كما كانت)
+function renderStudySubjects() {
   const grid = document.getElementById('subjectsGrid');
   grid.innerHTML = '';
   SUBJECTS.forEach(sub => {
@@ -455,115 +478,153 @@ function renderSubjects() {
         </div>
         <div class="subject-actions">
           <button class="btn-info" onclick="showInfo('${sub.key}')">ⓘ معلومات</button>
+          <a href="#" class="btn-start">▶ ابدأ المذاكرة</a>
         </div>
       </div>
     `;
   });
 }
 
-// ----- قسم الاختبارات التفاعلية -----
-
-function renderQuizTabs() {
-  const container = document.getElementById('quizTabs');
-  container.innerHTML = '';
+// رسم شبكة الاختبارات
+function renderTestsSubjects() {
+  const grid = document.getElementById('testsGrid');
+  grid.innerHTML = '';
   SUBJECTS.forEach(sub => {
-    const btn = document.createElement('button');
-    btn.className = 'quiz-tab-btn';
-    btn.innerHTML = `${sub.icon} ${sub.name}`;
-    btn.onclick = () => loadQuiz(sub.key, btn);
-    container.appendChild(btn);
+    // لكل مادة نعرض كارت وبداخله الامتحانات
+    let examsHTML = '';
+    QUIZ_DATA[sub.key].forEach((exam, index) => {
+      examsHTML += `
+        <button class="exam-btn" onclick="startQuiz('${sub.key}', ${index})">
+          <span>📝 ${exam.title}</span>
+          <span style="color:var(--cyan); font-size:0.8rem;">10 أسئلة ◀</span>
+        </button>
+      `;
+    });
+
+    grid.innerHTML += `
+      <div class="subject-card">
+        <div class="subject-header" style="margin-bottom:10px;">
+          <div class="subject-icon">${sub.icon}</div>
+          <div>
+            <div class="subject-title">اختبارات ${sub.name}</div>
+            <div class="subject-desc">اختر الامتحان لتبدأ التقييم</div>
+          </div>
+        </div>
+        <div class="exams-list">${examsHTML}</div>
+      </div>
+    `;
   });
 }
 
-function loadQuiz(key, btnEl) {
-  currentQuizKey = key;
-  // إبراز الزر النشط
-  document.querySelectorAll('.quiz-tab-btn').forEach(b => b.classList.remove('active'));
-  if(btnEl) btnEl.classList.add('active');
+// متغيرات الاختبار الحالي
+let currentQuizKey = '';
+let currentQuizData = null;
+let currentQIndex = 0;
+let userAnswers = [];
+
+function startQuiz(subjectKey, examIndex) {
+  currentQuizKey = subjectKey;
+  currentQuizData = QUIZ_DATA[subjectKey][examIndex];
+  currentQIndex = 0;
+  userAnswers = new Array(10).fill(null);
+
+  document.getElementById('testsGrid').style.display = 'none';
+  document.getElementById('quizInterface').style.display = 'block';
+  document.getElementById('quizContent').style.display = 'block';
+  document.getElementById('quizResult').style.display = 'none';
   
-  const quiz = QUIZZES[key];
-  document.getElementById('quizQuestion').textContent = quiz.q;
-  document.getElementById('quizFeedback').innerHTML = '';
+  document.getElementById('qTitle').textContent = `امتحان ${SUBJECTS.find(s=>s.key===subjectKey).name} - ${currentQuizData.title}`;
   
-  const optsContainer = document.getElementById('quizOptions');
+  showQuestion();
+}
+
+function showQuestion() {
+  const q = currentQuizData.questions[currentQIndex];
+  document.getElementById('qProgress').textContent = `سؤال ${currentQIndex + 1} من 10`;
+  document.getElementById('qText').textContent = q.q;
+  
+  const optsContainer = document.getElementById('qOptions');
   optsContainer.innerHTML = '';
   
-  quiz.opts.forEach((optText, index) => {
-    const optBtn = document.createElement('button');
-    optBtn.className = 'quiz-option-btn';
-    optBtn.textContent = optText;
-    optBtn.onclick = () => checkAnswer(index, optBtn);
-    optsContainer.appendChild(optBtn);
+  q.o.forEach((optText, i) => {
+    const isSelected = userAnswers[currentQIndex] === i ? 'selected' : '';
+    optsContainer.innerHTML += `<button class="option-btn ${isSelected}" onclick="selectOption(${i})">${optText}</button>`;
   });
-}
 
-function checkAnswer(selectedIndex, btnEl) {
-  if(!currentQuizKey) return;
-  const quiz = QUIZZES[currentQuizKey];
-  const feedbackEl = document.getElementById('quizFeedback');
+  document.getElementById('btnPrev').disabled = currentQIndex === 0;
   
-  // منع النقر المتكرر
-  const allBtns = document.querySelectorAll('.quiz-option-btn');
-  allBtns.forEach(b => b.disabled = true);
-  
-  if(selectedIndex === quiz.ans) {
-    btnEl.classList.add('correct-ans');
-    feedbackEl.innerHTML = '<span style="color:var(--green)">✅ إجابة صحيحة! كسبت 10 نقاط</span>';
-    
-    // تحديث النقاط والإحصائيات
-    state.points[currentQuizKey] = (state.points[currentQuizKey] || 0) + 10;
-    state.activities[currentQuizKey] = (state.activities[currentQuizKey] || 0) + 1;
-    state.correctAnswers = (state.correctAnswers || 0) + 1;
-    
-    saveState(state);
-    renderUI();
-    renderSubjects();
-    showToast('🎉 أحسنت! تمت إضافة النقاط بنجاح.');
-    
+  if(currentQIndex === 9) {
+    document.getElementById('btnNext').style.display = 'none';
+    document.getElementById('btnSubmit').style.display = 'block';
   } else {
-    btnEl.classList.add('wrong-ans');
-    // إظهار الإجابة الصحيحة
-    allBtns[quiz.ans].classList.add('correct-ans');
-    feedbackEl.innerHTML = '<span style="color:var(--accent)">❌ إجابة خاطئة. حاول مرة أخرى لاحقاً!</span>';
-    
-    if(state.supportMode) {
-      showToast('💡 تلميح: راجع معلومات المادة من قسم الدراسة.');
-    }
+    document.getElementById('btnNext').style.display = 'block';
+    document.getElementById('btnSubmit').style.display = 'none';
   }
 }
 
-// أدوات إضافية (معلومات والمودال)
+function selectOption(optIndex) {
+  userAnswers[currentQIndex] = optIndex;
+  showQuestion(); // re-render to show selection
+}
+
+function prevQuestion() { if(currentQIndex > 0) { currentQIndex--; showQuestion(); } }
+function nextQuestion() { 
+  if(userAnswers[currentQIndex] === null) { showToast('الرجاء اختيار إجابة أولاً!'); return; }
+  if(currentQIndex < 9) { currentQIndex++; showQuestion(); } 
+}
+
+function submitQuiz() {
+  if(userAnswers[currentQIndex] === null) { showToast('الرجاء الإجابة على السؤال الأخير!'); return; }
+  
+  let score = 0;
+  currentQuizData.questions.forEach((q, i) => { if(userAnswers[i] === q.a) score++; });
+  
+  document.getElementById('quizContent').style.display = 'none';
+  document.getElementById('quizResult').style.display = 'block';
+  document.getElementById('resultScore').textContent = `${score} / 10`;
+  
+  // مكافأة النقاط (كل إجابة صحيحة = 2 نقطة)
+  const pointsEarned = score * 2;
+  state.points[currentQuizKey] += pointsEarned;
+  state.activities[currentQuizKey] += 1;
+  saveState(state);
+  
+  document.getElementById('resultMsg').textContent = `أحسنت! لقد حصلت على ${pointsEarned} نقطة في ${SUBJECTS.find(s=>s.key===currentQuizKey).name}.`;
+  
+  renderUI();
+  renderStudySubjects(); // تحديث أشرطة التقدم
+}
+
+function closeQuiz() {
+  document.getElementById('quizInterface').style.display = 'none';
+  document.getElementById('testsGrid').style.display = 'grid';
+}
+
+// وظائف مساعدة للـ UI (تحديث الواجهة والتلميحات)
+function renderUI() {
+  const total = getTotal(state);
+  const lvl = getLevel(total);
+  document.getElementById('totalPts').textContent = total;
+  document.getElementById('userLevel').textContent = `المستوى ${lvl.num} — ${lvl.name}`;
+  const sw = document.getElementById('supportSwitch');
+  if(state.supportMode) sw.classList.add('on'); else sw.classList.remove('on');
+}
+
 function showInfo(key) {
   const sub = SUBJECTS.find(s=>s.key===key);
   document.getElementById('modalTitle').textContent = sub.icon + ' ' + sub.name;
   document.getElementById('modalBody').innerHTML = `
     <p>${sub.info}</p><br>
     <p><strong style="color:var(--secondary)">النقاط المكتسبة:</strong> ${state.points?.[key]||0} نقطة</p>
-    <p><strong style="color:var(--secondary)">الهدف:</strong> 50 نقطة للوصول لمستوى متمكن</p>
+    <p><strong style="color:var(--secondary)">الاختبارات المنجزة:</strong> ${state.activities?.[key]||0} اختبار</p>
   `;
   document.getElementById('modalOverlay').classList.add('open');
 }
 
-function closeModal(e) {
-  if(!e || e.target.id==='modalOverlay') {
-    document.getElementById('modalOverlay').classList.remove('open');
-  }
-}
+function closeModal(e) { if(!e || e.target.id==='modalOverlay') document.getElementById('modalOverlay').classList.remove('open'); }
+function toggleSupport() { state.supportMode = !state.supportMode; saveState(state); renderUI(); showToast(state.supportMode ? '✨ تم تفعيل وضع الدعم' : '🔕 تم إيقاف وضع الدعم'); }
+function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.style.opacity='1'; setTimeout(()=>t.style.opacity='0', 3000); }
 
-function toggleSupport() {
-  state.supportMode = !state.supportMode;
-  saveState(state);
-  renderUI();
-  showToast(state.supportMode ? '✨ تم تفعيل وضع الدعم' : '🔕 تم إيقاف وضع الدعم');
-}
-
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.style.opacity='1';
-  setTimeout(()=>t.style.opacity='0', 3000);
-}
-
-// بدء التشغيل
 init();
 </script>
 </body>
