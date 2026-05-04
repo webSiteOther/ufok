@@ -21,8 +21,8 @@
   .nav-links a:hover,.nav-links a.active{color:var(--text);background:rgba(108,63,232,0.2);}
   .main{padding:90px 24px 60px;max-width:1100px;margin:0 auto;}
   .page-header{text-align:center;margin-bottom:24px;}
-  .page-header h1{font-size:2.4rem;font-weight:900;margin-bottom:8px;}
-  .page-header p{color:var(--muted);font-size:0.95rem;}
+  .page-header h1{font-size:2.4rem;font-weight:900;margin-bottom:8px; transition: 0.3s;}
+  .page-header p{color:var(--muted);font-size:0.95rem; transition: 0.3s;}
 
   /* Image */
   .hero-image-container {
@@ -39,40 +39,6 @@
   .grid-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: grid; grid-template-columns: repeat(10, 1fr); grid-template-rows: repeat(6, 1fr); }
   .grid-box { background-color: var(--bg); animation: revealBox 1s forwards ease-out; }
   @keyframes revealBox { 0% { opacity: 1; transform: scale(1.05); } 100% { opacity: 0; transform: scale(0.5); } }
-
-  /* Section Toggles (الزرارين الكبار) */
-  .section-tabs {
-    display: flex;
-    gap: 20px;
-    justify-content: center;
-    margin-bottom: 40px;
-  }
-  .tab-btn {
-    flex: 1;
-    max-width: 300px;
-    padding: 16px;
-    font-size: 1.2rem;
-    font-weight: 800;
-    font-family: 'Tajawal', sans-serif;
-    border-radius: 16px;
-    border: 2px solid var(--primary);
-    background: transparent;
-    color: var(--text);
-    cursor: pointer;
-    transition: all 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  .tab-btn.active {
-    background: linear-gradient(135deg, var(--primary), #8B5CF6);
-    color: white;
-    box-shadow: 0 8px 25px rgba(108,63,232,0.4);
-    border-color: transparent;
-    transform: translateY(-3px);
-  }
-  .tab-btn:hover:not(.active) { background: rgba(108,63,232,0.1); }
 
   /* Sections Content */
   .content-section { display: none; animation: fadeIn 0.4s ease; }
@@ -167,7 +133,10 @@
 <nav>
   <a href="index.html" class="logo">أُفُق</a>
   <div class="nav-links">
-    <a href="student.html" class="active">المواد</a>
+    <!-- أزرار التنقل الرئيسية -->
+    <a href="#" id="navStudy" class="active" onclick="switchSection('study'); return false;">المواد</a>
+    <a href="#" id="navTests" onclick="switchSection('tests'); return false;">الاختبارات</a>
+    
     <a href="progress.html">التقدم</a>
     <a href="badges.html">الإنجازات</a>
     <a href="parent.html">ولي الأمر</a>
@@ -177,24 +146,15 @@
 </nav>
 
 <div class="main">
+  <!-- العناوين تتغير برمجياً حسب القسم -->
   <div class="page-header">
-    <h1>📚 المواد والاختبارات</h1>
-    <p>اختر بين مواد التعلم للمذاكرة، أو الاختبارات لتقييم مستواك!</p>
+    <h1 id="pageTitle">📚 المواد الدراسية</h1>
+    <p id="pageDesc">اختر مادتك وابدأ رحلتك التعليمية — كل نشاط يكسبك نقاطاً وإنجازات!</p>
   </div>
 
   <div class="hero-image-container">
     <img id="mainImage" src="img5.jpeg" alt="صورة توضيحية" class="hero-image" onerror="this.src='https://via.placeholder.com/800x400/16132E/6C3FE8?text=أفق+التعليمية'">
     <div class="grid-overlay" id="gridOverlay"></div>
-  </div>
-
-  <!-- أزرار التبديل -->
-  <div class="section-tabs">
-    <button class="tab-btn active" id="btnStudy" onclick="switchSection('study')">
-      📖 مواد التعلم
-    </button>
-    <button class="tab-btn" id="btnTests" onclick="switchSection('tests')">
-      📝 قسم الاختبارات
-    </button>
   </div>
 
   <!-- قسم الدراسة والتعلم -->
@@ -316,7 +276,7 @@ const SUBJECTS = [
   { key:'islamic', icon:'⭐', name:'التربية الإسلامية', desc:'القرآن والأخلاق والقيم', color:'#F7B731', info:'التربية الإسلامية تعلمك القرآن الكريم...'}
 ];
 
-// بنك الأسئلة (120 سؤال: كل مادة امتحانين، كل امتحان 10 أسئلة)
+// بنك الأسئلة
 const QUIZ_DATA = {
   math: [
     { title: "الامتحان الأول (الجمع والطرح)", questions: [
@@ -418,7 +378,7 @@ const QUIZ_DATA = {
 
 // حالة التطبيق والمستخدم
 let state = {};
-let currentSection = 'study'; // تتبع القسم الحالي لتفادي تكرار الأنيميشن عند الضغط على نفس الزر
+let currentSection = 'study';
 
 function getState() { try { return JSON.parse(localStorage.getItem('ufuq_data') || '{}'); } catch(e) { return {}; } }
 function saveState(s) { localStorage.setItem('ufuq_data', JSON.stringify(s)); }
@@ -439,31 +399,40 @@ function init() {
   renderTestsSubjects();
 }
 
-// التبديل بين قسم الدراسة وقسم الاختبارات مع تغيير الصورة والأنيميشن
+// دالة التبديل عبر شريط التنقل العلوي (الـ Navbar)
 function switchSection(section) {
-  if (currentSection === section) return; // منع التكرار لو تم الضغط على نفس الزر
+  if (currentSection === section) return;
   currentSection = section;
 
-  document.getElementById('btnStudy').classList.remove('active');
-  document.getElementById('btnTests').classList.remove('active');
+  // إزالة الـ active من أزرار الهيدر
+  document.getElementById('navStudy').classList.remove('active');
+  document.getElementById('navTests').classList.remove('active');
+  
+  // إخفاء الأقسام
   document.getElementById('studySection').classList.remove('active');
   document.getElementById('testsSection').classList.remove('active');
 
   const mainImg = document.getElementById('mainImage');
+  const pageTitle = document.getElementById('pageTitle');
+  const pageDesc = document.getElementById('pageDesc');
 
   if(section === 'study') {
-    document.getElementById('btnStudy').classList.add('active');
+    document.getElementById('navStudy').classList.add('active');
     document.getElementById('studySection').classList.add('active');
-    mainImg.src = 'img5.jpeg'; // استعادة الصورة الأساسية
+    mainImg.src = 'img5.jpeg';
+    pageTitle.textContent = '📚 المواد الدراسية';
+    pageDesc.textContent = 'اختر مادتك وابدأ رحلتك التعليمية — كل نشاط يكسبك نقاطاً وإنجازات!';
   } else {
-    document.getElementById('btnTests').classList.add('active');
+    document.getElementById('navTests').classList.add('active');
     document.getElementById('testsSection').classList.add('active');
     document.getElementById('testsGrid').style.display = 'grid';
     document.getElementById('quizInterface').style.display = 'none';
-    mainImg.src = 'img6.jpeg'; // عرض الصورة الجديدة للاختبارات
+    mainImg.src = 'img6.jpeg';
+    pageTitle.textContent = '📝 قسم الاختبارات';
+    pageDesc.textContent = 'اختر الامتحان لتقييم مستواك وحصد المزيد من النقاط!';
   }
   
-  // إعادة تشغيل التأثير البصري
+  // إعادة تشغيل التأثير البصري مع كل تبديل
   playImageAnimation();
 }
 
@@ -609,7 +578,7 @@ function submitQuiz() {
   document.getElementById('resultMsg').textContent = `أحسنت! لقد حصلت على ${pointsEarned} نقطة في ${SUBJECTS.find(s=>s.key===currentQuizKey).name}.`;
   
   renderUI();
-  renderStudySubjects(); // تحديث أشرطة التقدم
+  renderStudySubjects(); 
 }
 
 function closeQuiz() {
